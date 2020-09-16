@@ -3,7 +3,7 @@ import numpy as np
 import random as rd
 
 T = 20              #starttemperatuur
-beta = 60           #gewilde temperatuur
+beta = 60           #gewenste temperatuur
 dt = 0.001          #tijdstap
 tijd = 40           #tijdaantal
 
