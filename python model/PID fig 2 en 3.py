@@ -13,13 +13,13 @@ temp = np.array([])                         #array voor temperatuur
 
 for t in tijdarray:
     e = beta - T                            #berekent de fout, het verschil tussen de gewenste en huidige waarde
-    P = Kp * e 
+    P = Kp * e                              #P term berekenen
     
     T = T + 50*dt * (1 - (T / 150))         #logistieke groei van temperatuur met een limiet van 150 graden   
-    if (P < 0):
-        T = T + P*dt   
+    if (P < 0):                             #zodat T niet het systeem opwarmt, maar alleen afkoeld
+        T = T + P*dt                        #maal dt zodat het schaalt als je dt veranderd
         
-    temp = np.append(temp,T)
+    temp = np.append(temp,T) 
     
 #dit gedeelte maakt de plot met matplotlib 
 
