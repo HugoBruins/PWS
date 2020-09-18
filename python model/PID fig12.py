@@ -3,7 +3,7 @@ import numpy as np
 
 T = 20              #starttemperatuur
 beta = 60           #gewenste temperatuur
-dt = 0.01          #tijdstap
+dt = 0.001          #tijdstap
 tijd = 40           #maximale tijd
 
 #constantes voor P, I en D termen
