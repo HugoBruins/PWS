@@ -16,7 +16,7 @@ temp = np.array([])                         #array voor temperatuur
 
 for t in tijdarray:
     e = beta - T                            #berekent de fout, het verschil tussen de gewenste en huidige waarde
-    P = Kp * e                              #D term
+    P = Kp * e                              #P term
     I = I + Ki*e*dt                         #I term
     
     T = T + 50*dt * (1 - (T / 150))         #logistieke groei van temperatuur met een limiet van 150 graden   
