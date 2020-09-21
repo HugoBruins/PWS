@@ -1,23 +1,24 @@
 Arduino code:
 
-Hier staat voorlopig nog niets, dat komt pas rond hoofdstuk 2 en 3
+De code voor de Arduino komt pas rond hoofdstuk 2 en 3
 
 Python Code
 
-Voor hoofdstuk 1 van PWS hebben we een aantal figuren gecreëerd die verschillende concepten van het PID systeem uitleggen. Deze figuren hebben we genummerd in het document en we hebben ook onze code genummerd op basis van de figuren.
+In hoofdstuk 1 van PWS zijn verschillende figuren gebruikt om concepten van een PID systeem uit te leggen. Deze figuren zijn genummerd in het document en in de code. De code om de figuren te maken is te vinden in de map "python code" en is genummerd op basis van de figuren.
 
-Om exact dezelfde figuren na te maken met python hebben wij het volgende programma gebruikt:
+Om exact dezelfde figuren na te maken met python is het volgende programma gebruikt:
 
 -anaconda navigator: https://www.anaconda.com/products/individual 
 
-Wanneer dit is geïnstalleerd kan je via “anaconda navigator” het programma “Spyder” openen, dit is de python IDE die we gebruikt hebben. Om de grafieken interactief te maken met een hogere resolutie op een apart tabblad kan je de volgende instructies navolgen (let op: dit is nodig voor meerdere lijnen in 1 grafiek): 
+Wanneer dit is geïnstalleerd kan je via “anaconda navigator” het programma “Spyder” openen, dit is de python IDE die gebruikt is. Om de grafieken interactief te maken met een hogere resolutie op een apart tabblad kan je eenmalig de volgende instructies volgen (let op: dit is nodig voor meerdere lijnen in 1 grafiek): 
 
 Bovenaan in de navigatiebalk bij Spyder heb je het knopje Tools, klik hier op en ga naar
 
 “preferences” -> “IPython console” -> “graphics” -> “Graphics backend”
 
 Verander hier “Inline” naar “Automatic” en druk op “apply”.
-Nu moet je rechtsboven bij de console op de 3 horizontale streepjes drukken en dan op “restart kernel” klikken (of control + . ) en nu verschijnen de plots op een apart tabblad.
+
+Nu moet je rechtsboven bij de console op de 3 horizontale streepjes drukken en dan op “restart kernel” klikken (of control + . ) Hierna verschijnen de plots op een ander tabblad.
 
 
 Instructies om het gewenste figuur na te maken:
@@ -26,10 +27,10 @@ Instructies om het gewenste figuur na te maken:
 
 2: open de code met Spyder.
 
-3: verander de constanten/variabelen bovenaan de code en verander de label onderaan de code op basis hiervan. De constanten/variabelen die we gebruikt hebben staan rondom het figuur in het document. (voor figuur 12 specifiek is het belangrijk dat je van lijn 24 en 25 een comment maakt voor de ene lijn door er een # voor te zetten)
+3: verander de constanten/variabelen bovenaan de code en verander de label onderaan de code op basis hiervan. De constanten/variabelen die gebruikt zijn staan rondom het figuur in het document. (voor figuur 12 specifiek is het belangrijk dat voor de blauwe lijn, van regel 24 en 25 een comment is gemaakt door er een # voor te zetten)
 
 4: Run de code met het knopje die een groene pijl aangeeft en klik de grafiek niet weg als er meerdere lijnen in het figuur zijn.
 
-5: Verander nu weer de constanten en de label en run de code opnieuw, nu zullen er 2 lijnen verschijnen in de code. Herhaal dit totdat alle lijnen zijn nagemaakt.
+5: Verander nu weer de constanten en de label en run de code opnieuw, nu zullen er 2 lijnen verschijnen in het figuur. Herhaal dit totdat alle lijnen zijn nagemaakt.
 
-Let op: Spyder zal ALLEEN meerdere lijnen vertonen als je hem hebt ingesteld om in een apart tabblad de grafiek te laten zien. 
+Let op: Spyder zal ALLEEN meerdere lijnen vertonen als het is ingesteld om in een apart tabblad de grafiek te laten zien. 
