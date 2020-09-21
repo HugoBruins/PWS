@@ -23,7 +23,7 @@ Instructies om het gewenste figuur na te maken:
 
 2: open de code met Spyder.
 
-3: verander de constanten/variabelen bovenaan de code en verander de label onderaan de code op basis hiervan. De constanten/variabelen die we gebruikt hebben staan rondom het figuur in het document.
+3: verander de constanten/variabelen bovenaan de code en verander de label onderaan de code op basis hiervan. De constanten/variabelen die we gebruikt hebben staan rondom het figuur in het document. (voor figuur 12 specifiek is het belangrijk dat je van lijn 24 en 25 een comment maakt voor de ene lijn door er een # voor te zetten)
 
 4: Run de code met het knopje die een groene pijl aangeeft en klik de grafiek niet weg als er meerdere lijnen in het figuur zijn.
 
