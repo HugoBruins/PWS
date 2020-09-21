@@ -13,8 +13,7 @@ Bovenaan in de navigatiebalk bij Spyder heb je het knopje Tools, klik hier op en
 
 “preferences” -> “IPython console” -> “graphics” -> “Graphics backend”
 
-Verander hier “Inline” naar “Automatic” en druk op “apply”. (Voordat je dit scherm uitgaat kan je eventueel Spyder ook nog naar dark theme veranderen in het “appearance” tabblad). 
-
+Verander hier “Inline” naar “Automatic” en druk op “apply”.
 Nu moet je rechtsboven bij de console op de 3 horizontale streepjes drukken en dan op “restart kernel” klikken (of control + . ) en nu verschijnen de plots op een apart tabblad.
 
 
