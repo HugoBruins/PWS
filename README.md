@@ -1,10 +1,13 @@
 Arduino code:
+
 Hier staat voorlopig nog niets, dat komt pas rond hoofdstuk 2 en 3
 
 Python Code
+
 Voor hoofdstuk 1 van PWS hebben we een aantal figuren gecreëerd die verschillende concepten van het PID systeem uitleggen. Deze figuren hebben we genummerd in het document en we hebben ook onze code genummerd op basis van de figuren.
 
 Om exact dezelfde figuren na te maken met python hebben wij het volgende programma gebruikt:
+
 -anaconda navigator: https://www.anaconda.com/products/individual 
 
 Wanneer dit is geïnstalleerd kan je via “anaconda navigator” het programma “Spyder” openen, dit is de python IDE die we gebruikt hebben. Om de grafieken interactief te maken met een hogere resolutie op een apart tabblad kan je de volgende instructies navolgen (let op: dit is nodig voor meerdere lijnen in 1 grafiek): 
