@@ -20,9 +20,13 @@ Nu moet je rechtsboven bij de console op de 3 horizontale streepjes drukken en d
 Instructies om het gewenste figuur na te maken:
 
 1: Kijk welk figuur je wilt namaken, en zoek de code op met dezelfde naam (figuur 12 zal dan “PID fig12.py” heten)
+
 2: open de code met Spyder.
+
 3: verander de constanten/variabelen bovenaan de code en verander de label onderaan de code op basis hiervan. De constanten/variabelen die we gebruikt hebben staan rondom het figuur in het document.
+
 4: Run de code met het knopje die een groene pijl aangeeft en klik de grafiek niet weg als er meerdere lijnen in het figuur zijn.
+
 5: Verander nu weer de constanten en de label en run de code opnieuw, nu zullen er 2 lijnen verschijnen in de code. Herhaal dit totdat alle lijnen zijn nagemaakt.
 
 Let op: Spyder zal ALLEEN meerdere lijnen vertonen als je hem hebt ingesteld om in een apart tabblad de grafiek te laten zien. 
