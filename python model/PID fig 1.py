@@ -19,8 +19,8 @@ for t in tijdarray:
 plt.figure(1)
 plt.grid(True)                                                 
 plt.plot(tijdarray,temp,label='temperatuur zonder controle')      
-plt.ylabel('temperatuur') 
-plt.xlabel('tijd')
+plt.ylabel('temperatuur (℃)') 
+plt.xlabel('tijd (sec)')
 leg = plt.legend()
 
 
