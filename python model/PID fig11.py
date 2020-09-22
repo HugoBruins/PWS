@@ -46,6 +46,6 @@ for t in tijdarray:
 plt.figure(11)
 plt.grid(True)                                                 
 plt.plot(tijdarray,temp,label='20,5,-5, vasthouden tot t=5')      
-plt.ylabel('temperatuur') 
-plt.xlabel('tijd')
+plt.ylabel('temperatuur (℃)') 
+plt.xlabel('tijd (sec)')
 leg = plt.legend()
