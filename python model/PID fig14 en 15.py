@@ -59,7 +59,7 @@ for t in tijdarray:
 plt.subplot(211)
 plt.grid(True)                                                 
 plt.plot(tijdarray,temp,label='20,5,-2, Imax = 50')      
-plt.ylabel('temperatuur') 
+plt.ylabel('temperatuur (℃)') 
 leg = plt.legend()
 
 #naakt een mooie subplot
@@ -68,6 +68,6 @@ plt.subplot(212)
 plt.grid(True)
 plt.plot(tijdarray,Px, label='P')
 plt.plot(tijdarray,Dx, label='D')
-plt.xlabel('tijd')
+plt.xlabel('tijd (sec)')
 leg = plt.legend()
 plt.ylabel('P en D waarde')
