@@ -1,12 +1,12 @@
 Arduino code:
 
-De code voor de Arduino komt pas rond hoofdstuk 2 en 3
+De code voor de Arduino komt pas rond hoofdstuk 2 en 3.
 
 Python Code
 
-In hoofdstuk 1 van PWS zijn verschillende figuren gebruikt om concepten van een PID systeem uit te leggen. Deze figuren zijn genummerd in het document en in de code. De code om de figuren te maken is te vinden in de map "python code" en is genummerd op basis van de figuren.
+In hoofdstuk 1 van PWS zijn verschillende figuren gebruikt om concepten van een PID-systeem uit te leggen. Deze figuren zijn genummerd in het document en in de code. De code om de figuren te maken is te vinden in de map "python code" en is genummerd op basis van de figuren.
 
-Om exact dezelfde figuren na te maken met python is het volgende programma gebruikt:
+Voor het maken van de figuren in python is het volgende programma gebruikt:
 
 -anaconda navigator: https://www.anaconda.com/products/individual 
 
