@@ -103,8 +103,16 @@ void loop() {
   float error = setpoint - angle_roll_output;
   float P = error * Kp;
   
-  //voor de PI controller
+  //voor de I controller
   I = I + Ki*error*tijdstap;
+  
+  //windup bescherming
+  if (I > 1000) {
+   I = 1000;
+  }
+  if (I < -1000) {
+   I = -1000; 
+  }
   
   //alles bij elkaar
   float PID = (P + I) * tijdstap;
@@ -115,6 +123,8 @@ void loop() {
   
   if (PID < -1000) {
     PID = -1000;
+  }
+  
   
   //voor het uitprinten van de hoek
   Serial.print(" | Angle  = "); 
