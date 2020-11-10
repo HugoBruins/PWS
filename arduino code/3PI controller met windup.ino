@@ -8,6 +8,7 @@
 #define motorInterfaceType 1
 AccelStepper stepper = AccelStepper(motorInterfaceType, stepPin, dirPin);
 
+int maxSnelheid = 1000;
 int snelheid;
 int tijdstap = 50;
 unsigned long vorigetijd;
@@ -40,7 +41,7 @@ float I = 0;
 
 void setup() {
   //stappenmotor 
-  stepper.setMaxSpeed(1000);
+  stepper.setMaxSpeed(maxSnelheid);
   stepper.setAcceleration(5);
   //mpu6050
   
@@ -125,12 +126,12 @@ void loop() {
 
   
   //zorgt ervoor dat de PID output nooit groter wordt dan de maximale RPM die we hebben ingesteld
-  if (PID > 1000) {
-    PID = 1000;
+  if (PID > maxSnelheid) {
+    PID = maxSnelheid;
   }
   
-  if (PID < -1000) {
-    PID = -1000;
+  if (PID < -1 * maxSnelheid) {
+    PID = -1 * maxSnelheid;
   }
   
   
