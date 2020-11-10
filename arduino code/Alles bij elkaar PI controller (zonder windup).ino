@@ -33,6 +33,9 @@ int temp;
 //voor de PID controller
 float setpoint = 0;
 float Kp = 0.25;
+float Ki = 0.05;
+
+float I = 0;
 
 void setup() {
   //stappenmotor 
@@ -96,22 +99,28 @@ void loop() {
   angle_pitch_output = angle_pitch_output * 0.9 + angle_pitch * 0.1;   //Take 90% of the output pitch value and add 10% of the raw pitch value
   angle_roll_output = angle_roll_output * 0.9 + angle_roll * 0.1;      //Take 90% of the output roll value and add 10% of the raw roll value
   
-  //voor de PID controller
-  
+  //voor de P
   float error = setpoint - angle_roll_output;
   float P = error * Kp;
-  float PID = P * tijdstap;
   
+  //voor de PI controller
+  I = I + Ki*error*tijdstap;
+  
+  //alles bij elkaar
+  float PID = (P + I) * tijdstap;
+  
+  if (PID > 1000) {
+    PID = 1000;
+  }
+  
+  if (PID < -1000) {
+    PID = -1000;
   
   //voor het uitprinten van de hoek
   Serial.print(" | Angle  = "); 
   Serial.println(angle_roll_output);
   Serial.print("PID output = ");
   Serial.println(PID);
-  
-  if (PID > 1000) {
-    PID = 1000;
-  }
   
   stepper.setSpeed(PID);
   stepper.runSpeed();     
