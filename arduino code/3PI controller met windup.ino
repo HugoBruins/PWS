@@ -34,6 +34,7 @@ int temp;
 float setpoint = 0;
 float Kp = 0.25;
 float Ki = 0.05;
+float Imax = 1000;
 
 float I = 0;
 
@@ -107,16 +108,23 @@ void loop() {
   I = I + Ki*error*tijdstap;
   
   //windup bescherming
-  if (I > 1000) {
-   I = 1000;
+  if (I > Imax) {
+   I = Imax;
   }
-  if (I < -1000) {
-   I = -1000; 
+  if (I < (-1 * Imax)) {
+   I = -1 * Imax; 
   }
   
   //alles bij elkaar
-  float PID = (P + I) * tijdstap;
+  float PID = (P) * tijdstap;
   
+  //doet I waarde erbij als I niet gelijk is aan Imax
+  if (I != Imax || I != (-1*Imax)) {
+    PID += I*tijdstap;
+  }
+
+  
+  //zorgt ervoor dat de PID output nooit groter wordt dan de maximale RPM die we hebben ingesteld
   if (PID > 1000) {
     PID = 1000;
   }
