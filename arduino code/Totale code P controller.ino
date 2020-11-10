@@ -92,6 +92,10 @@ void loop() {
   angle_pitch_output = angle_pitch_output * 0.9 + angle_pitch * 0.1;   //Take 90% of the output pitch value and add 10% of the raw pitch value
   angle_roll_output = angle_roll_output * 0.9 + angle_roll * 0.1;      //Take 90% of the output roll value and add 10% of the raw roll value
   Serial.print(" | Angle  = "); 
+  Serial.println(angle_roll_output);
+  stepper.setSpeed(snelheid);
+  stepper.runSpeed();     
+  
 
 
 
@@ -99,11 +103,8 @@ void loop() {
   
   unsigned long tijd = millis();  
   
-  while(tijd - loop_timer < 4) {                                 //Wait until the loop_timer reaches 4000us (250Hz) before starting the next loop
-    stepper.setSpeed(snelheid);
-    stepper.runSpeed();     
-    Serial.println(angle_roll_output);
-    loop_timer = micros();//Reset the loop timer
+  while(tijd - loop_timer < 4) {                                 //Wait until the loop_timer reaches 4000us (250Hz) before starting the next loo
+    loop_timer = millis();//Reset the loop timer
   }  
 }
 
