@@ -30,6 +30,10 @@ float angle_pitch_output, angle_roll_output;
 long loop_timer;
 int temp;
 
+//voor de PID controller
+float setpoint = 0;
+float Kp = 1;
+
 void setup() {
   //stappenmotor 
   stepper.setMaxSpeed(1000);
@@ -91,19 +95,27 @@ void loop() {
   //To dampen the pitch and roll angles a complementary filter is used
   angle_pitch_output = angle_pitch_output * 0.9 + angle_pitch * 0.1;   //Take 90% of the output pitch value and add 10% of the raw pitch value
   angle_roll_output = angle_roll_output * 0.9 + angle_roll * 0.1;      //Take 90% of the output roll value and add 10% of the raw roll value
+  
+  //voor de PID controller
+  
+  float error = setpoint - angle_roll_output;
+  float P = error * Kp;
+  float PID = P * tijdstap;
+  
+  
+  //voor het uitprinten van de hoek
   Serial.print(" | Angle  = "); 
   Serial.println(angle_roll_output);
+  Serial.print("PID output = ");
+  Serial.println(PID);
   stepper.setSpeed(snelheid);
   stepper.runSpeed();     
-  
 
-
-
-  //code voor het aansturen van de stappenmotor en PID variabele angle_roll_output is degene die we nodig hebben
+  //timertje hieronder zodat alle code elke tijdstap wordt uitgevoerd.
   
   unsigned long tijd = millis();  
   
-  while(tijd - loop_timer < 4) {                                 //Wait until the loop_timer reaches 4000us (250Hz) before starting the next loo
+  while(tijd - loop_timer < tijdstap) {                                 //Wait until the loop_timer reaches 4000us (250Hz) before starting the next loo
     loop_timer = millis();//Reset the loop timer
   }  
 }
