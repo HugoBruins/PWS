@@ -32,7 +32,7 @@ int temp;
 
 //voor de PID controller
 float setpoint = 0;
-float Kp = 1;
+float Kp = 0.25;
 
 void setup() {
   //stappenmotor 
@@ -108,7 +108,12 @@ void loop() {
   Serial.println(angle_roll_output);
   Serial.print("PID output = ");
   Serial.println(PID);
-  stepper.setSpeed(snelheid);
+  
+  if (PID > 1000) {
+    PID = 1000;
+  }
+  
+  stepper.setSpeed(PID);
   stepper.runSpeed();     
 
   //timertje hieronder zodat alle code elke tijdstap wordt uitgevoerd.
