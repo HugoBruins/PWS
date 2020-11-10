@@ -3,10 +3,14 @@
 #include <AccelStepper.h>
 #include <Wire.h>
 
-#define dirPin 5
-#define stepPin 4
+#define dirPin 3
+#define stepPin 2
+#define dirPin2 5
+#define stepPin2 4
 #define motorInterfaceType 1
 AccelStepper stepper = AccelStepper(motorInterfaceType, stepPin, dirPin);
+AccelStepper stepper2 = AccelStepper(motorInterfaceType, stepPin2, dirPin2);
+
 
 int maxSnelheid = 1000;
 int snelheid;
@@ -42,7 +46,8 @@ float I = 0;
 void setup() {
   //stappenmotor 
   stepper.setMaxSpeed(maxSnelheid);
-  stepper.setAcceleration(5);
+  stepper2.setMaxSpeed(maxSnelheid);
+
   //mpu6050
   
   Wire.begin();                                                        //Start I2C as master
@@ -145,10 +150,10 @@ void loop() {
   Serial.print("PID output erna: ");
   Serial.println(PID);
   
-
-  
   stepper.setSpeed(PID);
   stepper.runSpeed();     
+  stepper2.setSpeed(PID * -1);
+  stepper2.runSpeed(); 
 
   //timertje hieronder zodat alle code elke tijdstap wordt uitgevoerd.
   
