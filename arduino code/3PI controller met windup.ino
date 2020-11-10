@@ -121,6 +121,8 @@ void loop() {
   Serial.println(angle_roll_output);
   Serial.print("PID output = ");
   Serial.println(PID);
+  Serial.print("I output = "); 
+  Serial.println(I);
   
   stepper.setSpeed(PID);
   stepper.runSpeed();     
