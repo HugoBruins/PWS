@@ -102,16 +102,14 @@ void loop() {
   float P = error * Kp;
   float PID = P * tijdstap;
   
-  
+   if (PID > 1000) {
+    PID = 1000;
+  }
   //voor het uitprinten van de hoek
   Serial.print(" | Angle  = "); 
   Serial.println(angle_roll_output);
   Serial.print("PID output = ");
   Serial.println(PID);
-  
-  if (PID > 1000) {
-    PID = 1000;
-  }
   
   stepper.setSpeed(PID);
   stepper.runSpeed();     
