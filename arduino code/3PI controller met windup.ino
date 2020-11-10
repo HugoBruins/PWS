@@ -34,7 +34,7 @@ int temp;
 //voor de PID controller
 float setpoint = 0;
 float Kp = 12.5;
-float Ki = 2.5;
+float Ki = 0.25;
 float Imax = 1000;
 
 float I = 0;
@@ -106,7 +106,7 @@ void loop() {
   float P = error * Kp;
   
   //voor de I controller
-  I = I + Ki*error*tijdstap;
+  I += Ki*error*tijdstap;
   
   //windup bescherming
   if (I > Imax) {
@@ -141,7 +141,8 @@ void loop() {
   if (PID < -1 * maxSnelheid) {
     PID = -1 * maxSnelheid;
   }
-  Serial.print("PID output erna;
+  
+  Serial.print("PID output erna: ");
   Serial.println(PID);
   
 
