@@ -1,4 +1,5 @@
-#include <MPU6050.h>
+//voor de stappenmotor
+
 #include <AccelStepper.h>
 #include <Wire.h>
 
@@ -7,14 +8,43 @@
 #define motorInterfaceType 1
 AccelStepper stepper = AccelStepper(motorInterfaceType, stepPin, dirPin);
 
+int snelheid;
+int tijdstap = 50;
+unsigned long vorigetijd;
+
+//voor de MPU 6050
+
+#include <Wire.h>
+//Declaring some global variables
+int gyro_x, gyro_y, gyro_z;
+long gyro_x_cal, gyro_y_cal, gyro_z_cal;
+boolean set_gyro_angles;
+
+long acc_x, acc_y, acc_z, acc_total_vector;
+float angle_roll_acc, angle_pitch_acc;
+
+float angle_pitch, angle_roll;
+int angle_pitch_buffer, angle_roll_buffer;
+float angle_pitch_output, angle_roll_output;
+
+long loop_timer;
+int temp;
+
+
+
 void setup() {
+  //stappenmotor 
   stepper.setMaxSpeed(1000);
   stepper.setAcceleration(5);
+  //mpu6050
+  
+  
 }
 
-  int snelheid;
-  int tijdstap = 50;
-  unsigned long vorigetijd;
+
+  
+  //
+
 
 void loop() { 
 
