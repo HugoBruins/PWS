@@ -10,7 +10,7 @@ AccelStepper stepper = AccelStepper(motorInterfaceType, stepPin, dirPin);
 
 int maxSnelheid = 1000;
 int snelheid;
-int tijdstap = 50;
+int tijdstap = 1;
 unsigned long vorigetijd;
 
 //voor de MPU 6050
@@ -33,8 +33,8 @@ int temp;
 
 //voor de PID controller
 float setpoint = 0;
-float Kp = 0.25;
-float Ki = 0.05;
+float Kp = 12.5;
+float Ki = 2.5;
 float Imax = 1000;
 
 float I = 0;
@@ -117,13 +117,21 @@ void loop() {
   }
   
   //alles bij elkaar
-  float PID = (P) * tijdstap;
+  float PID = P;
   
   //doet I waarde erbij als I niet gelijk is aan Imax
   if (I != Imax || I != (-1*Imax)) {
-    PID += I*tijdstap;
+    PID += I;
   }
 
+  
+  //voor het uitprinten van de hoek
+  Serial.print(" | Angle  = "); 
+  Serial.println(angle_roll_output);
+  Serial.print("PID output = ");
+  Serial.println(PID);
+  Serial.print("I output = "); 
+  Serial.println(I);
   
   //zorgt ervoor dat de PID output nooit groter wordt dan de maximale RPM die we hebben ingesteld
   if (PID > maxSnelheid) {
@@ -133,15 +141,10 @@ void loop() {
   if (PID < -1 * maxSnelheid) {
     PID = -1 * maxSnelheid;
   }
-  
-  
-  //voor het uitprinten van de hoek
-  Serial.print(" | Angle  = "); 
-  Serial.println(angle_roll_output);
-  Serial.print("PID output = ");
+  Serial.print("PID output erna;
   Serial.println(PID);
-  Serial.print("I output = "); 
-  Serial.println(I);
+  
+
   
   stepper.setSpeed(PID);
   stepper.runSpeed();     
