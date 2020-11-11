@@ -28,13 +28,12 @@ float angle_roll_acc, angle_pitch_acc;
 float angle_pitch, angle_roll;
 int angle_pitch_buffer, angle_roll_buffer;
 float angle_pitch_output, angle_roll_output;
-
-long loop_timer;
 int temp;
 
 
 void setup() {
   //stappenmotor 
+  pinMode(LED_BUILTIN, OUTPUT);
   stepper.setMaxSpeed(1000);
   stepper2.setMaxSpeed(1000);
   
@@ -56,11 +55,20 @@ void setup() {
   gyro_z_cal /= 1000;                                                 
   Serial.begin(115200);
   loop_timer = micros();                                               //Reset the loop timer
+
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(500);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(500);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(500);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(500);
 }
 
 
 void loop() { 
-  //voor de stappenmotor
+  //voor de stappenmotor  
   stepper.setSpeed(snelheid);
   stepper2.setSpeed(snelheid);
   stepper.runSpeed();
@@ -141,4 +149,3 @@ void read_mpu_6050_data(){                                             //Subrout
   gyro_y = Wire.read()<<8|Wire.read();                                 
   gyro_z = Wire.read()<<8|Wire.read();                                 
 }
-
