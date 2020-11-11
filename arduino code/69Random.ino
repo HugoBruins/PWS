@@ -14,7 +14,7 @@ AccelStepper stepper2 = AccelStepper(motorInterfaceType, stepPin2, dirPin2);
 
 int maxSnelheid = 1000;
 int snelheid;
-int tijdstap = 1;
+int tijdstap = 4;
 unsigned long vorigetijd;
 
 //voor de MPU 6050
@@ -45,8 +45,10 @@ float I = 0;
 
 void setup() {
   //stappenmotor 
-  stepper.setMaxSpeed(maxSnelheid);
-  stepper2.setMaxSpeed(maxSnelheid);
+  stepper.setMaxSpeed(1000);
+  stepper2.setMaxSpeed(1000);
+  stepper.setSpeed(1000);
+  stepper2.setSpeed(1000);
 
   //mpu6050
   
@@ -69,6 +71,8 @@ void setup() {
 }
 
 void loop() { 
+  stepper.runSpeed();
+  stepper2.runSpeed();
   //eerst de mpu hier omdat het anders chaos wordt
   read_mpu_6050_data();   
   //Subtract the offset values from the raw gyro values
@@ -106,55 +110,6 @@ void loop() {
   angle_pitch_output = angle_pitch_output * 0.9 + angle_pitch * 0.1;   //Take 90% of the output pitch value and add 10% of the raw pitch value
   angle_roll_output = angle_roll_output * 0.9 + angle_roll * 0.1;      //Take 90% of the output roll value and add 10% of the raw roll value
   
-  //voor de P
-  float error = setpoint - angle_roll_output;
-  float P = error * Kp;
-  
-  //voor de I controller
-  I += Ki*error*tijdstap;
-  
-  //windup bescherming
-  if (I > Imax) {
-   I = Imax;
-  }
-  if (I < (-1 * Imax)) {
-   I = -1 * Imax; 
-  }
-  
-  //alles bij elkaar
-  float PID = P;
-  
-  //doet I waarde erbij als I niet gelijk is aan Imax
-  if (I != Imax || I != (-1*Imax)) {
-    PID += I;
-  }
-
-  
-  //voor het uitprinten van de hoek
-  Serial.print(" | Angle  = "); 
-  Serial.println(angle_roll_output);
-  Serial.print("PID output = ");
-  Serial.println(PID);
-  Serial.print("I output = "); 
-  Serial.println(I);
-  
-  //zorgt ervoor dat de PID output nooit groter wordt dan de maximale RPM die we hebben ingesteld
-  if (PID > maxSnelheid) {
-    PID = maxSnelheid;
-  }
-  
-  if (PID < -1 * maxSnelheid) {
-    PID = -1 * maxSnelheid;
-  }
-  
-  Serial.print("PID output erna: ");
-  Serial.println(PID);
-  
-  stepper.setSpeed(PID);
-  stepper.runSpeed();     
-  stepper2.setSpeed(PID * -1);
-  stepper2.runSpeed(); 
-
   //timertje hieronder zodat alle code elke tijdstap wordt uitgevoerd.
   
   unsigned long tijd = millis();  
