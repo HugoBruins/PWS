@@ -146,10 +146,12 @@ void loop() {
     PID = -1 * maxSnelheid;
   }
   
+  float PID2 = PID * -1;
+  
   Serial.print("PID output erna: ");
   Serial.println(PID);
   
-  stepper.setSpeed(PID);
+  stepper.setSpeed(PID2);
   stepper.runSpeed();     
   stepper2.setSpeed(PID);
   stepper2.runSpeed(); 
