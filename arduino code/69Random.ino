@@ -11,6 +11,8 @@ AccelStepper stepper = AccelStepper(motorInterfaceType, stepPin, dirPin);
 AccelStepper stepper2 = AccelStepper(motorInterfaceType, stepPin2, dirPin2);
 float tijdstap = 1;
 int maxSnelheid = 1000
+long loop_timer;
+float snelheid = 500;
 
 void setup() {
   //stappenmotor 
@@ -20,14 +22,32 @@ void setup() {
 
 
 void loop() { 
-  stepper.setSpeed(1000);
-  stepper2.setSpeed(1000);
-  stepper.runSpeed();
-  stepper2.runSpeed();
-  
-  unsigned long tijd = millis();  
-  
-  while(tijd - loop_timer < tijdstap) {                        
+  for (int snelheid = 0; snelheid < 1000; i++) {
+    stepper.setSpeed(snelheid);
+    stepper2.setSpeed(snelheid);
+    stepper.runSpeed();
+    stepper2.runSpeed();
+    
+    unsigned long tijd = millis();  
+    while(tijd - loop_timer < tijdstap) {                        
     loop_timer = millis();
+  }
+  
+  for (int snelheid = 1000; snelheid > 0; i++) {
+    stepper.setSpeed(snelheid);
+    stepper2.setSpeed(snelheid);
+    stepper.runSpeed();
+    stepper2.runSpeed();
+    
+    unsigned long tijd = millis();  
+    while(tijd - loop_timer < tijdstap) {                        
+    loop_timer = millis();
+  }
+  
+
+  
+
+  
+  
   }  
 }
