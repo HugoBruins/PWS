@@ -9,15 +9,25 @@
 #define motorInterfaceType 1
 AccelStepper stepper = AccelStepper(motorInterfaceType, stepPin, dirPin);
 AccelStepper stepper2 = AccelStepper(motorInterfaceType, stepPin2, dirPin2);
+float tijdstap = 1;
+int maxSnelheid = 1000
 
 void setup() {
   //stappenmotor 
   stepper.setMaxSpeed(1000);
   stepper2.setMaxSpeed(1000);
-  stepper.setSpeed(1000);
-  stepper2.setSpeed(1000);
+}
 
 
 void loop() { 
+  stepper.setSpeed(1000);
+  stepper2.setSpeed(1000);
   stepper.runSpeed();
   stepper2.runSpeed();
+  
+  unsigned long tijd = millis();  
+  
+  while(tijd - loop_timer < tijdstap) {                        
+    loop_timer = millis();
+  }  
+}
