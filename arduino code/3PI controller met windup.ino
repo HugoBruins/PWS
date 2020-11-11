@@ -11,7 +11,7 @@
 AccelStepper stepper = AccelStepper(motorInterfaceType, stepPin, dirPin);
 AccelStepper stepper2 = AccelStepper(motorInterfaceType, stepPin2, dirPin2);
 
-
+long loop_timer;
 int maxSnelheid = 1000;
 int snelheid;
 int tijdstap = 1;
@@ -32,7 +32,6 @@ float angle_pitch, angle_roll;
 int angle_pitch_buffer, angle_roll_buffer;
 float angle_pitch_output, angle_roll_output;
 
-long loop_timer;
 int temp;
 
 //voor de PID controller
@@ -152,16 +151,13 @@ void loop() {
   
   stepper.setSpeed(PID);
   stepper.runSpeed();     
-  stepper2.setSpeed(PID * -1);
+  stepper2.setSpeed(PID);
   stepper2.runSpeed(); 
 
   //timertje hieronder zodat alle code elke tijdstap wordt uitgevoerd.
   
-  unsigned long tijd = millis();  
-  
-  while(tijd - loop_timer < tijdstap) {                                 //Wait until the loop_timer reaches 4000us (250Hz) before starting the next loo
-    loop_timer = millis();//Reset the loop timer
-  }  
+  while(micros() - loop_timer < 4000);                                 //Wait until the loop_timer reaches 4000us (250Hz) before starting the next loop
+  loop_timer = micros();//Reset the loop timer
 }
 
 
