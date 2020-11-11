@@ -30,7 +30,7 @@ void loop() {
     
     unsigned long tijd = millis();  
     while(tijd - loop_timer < tijdstap) {                        
-    loop_timer = millis();
+      loop_timer = millis();
   }
   
   for (int snelheid = 1000; snelheid > 0; i++) {
@@ -41,7 +41,7 @@ void loop() {
     
     unsigned long tijd = millis();  
     while(tijd - loop_timer < tijdstap) {                        
-    loop_timer = millis();
+      loop_timer = millis();
   }
   
 
