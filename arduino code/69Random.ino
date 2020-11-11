@@ -33,7 +33,7 @@ void loop() {
       loop_timer = millis();
   }
   }
-  for (int snelheid = 1000; snelheid > 0; snelheid++) {
+  for (int snelheid = 1000; snelheid > -1000; snelheid--) {
     stepper.setSpeed(snelheid);
     stepper2.setSpeed(snelheid);
     stepper.runSpeed();
