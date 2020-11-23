@@ -34,3 +34,12 @@ Instructies om het gewenste figuur na te maken:
 5: Verander nu weer de constanten en de label en run de code opnieuw, nu zullen er 2 lijnen verschijnen in het figuur. Herhaal dit totdat alle lijnen zijn nagemaakt.
 
 Let op: Spyder zal ALLEEN meerdere lijnen vertonen als het is ingesteld om in een apart tabblad de grafiek te laten zien. 
+
+
+
+Arduino code:
+
+Bij de arduino code is het mogelijk om de code te kopiëren en te plakken in Arduino IDE software, en die vervolgens te uploaden in de robot. Verder moeten de libraries "Accelstepper" en "wire.h" geinstalleerd worden om de codes werkend te krijgen.
+
+
+
