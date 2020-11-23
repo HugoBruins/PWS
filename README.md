@@ -8,7 +8,7 @@ In hoofdstuk 1 van PWS zijn verschillende figuren gebruikt om concepten van een 
 
 Voor het maken van de figuren in python is het volgende programma gebruikt:
 
--anaconda navigator: https://www.anaconda.com/products/individual 
+* anaconda navigator: https://www.anaconda.com/products/individual 
 
 Wanneer dit is geïnstalleerd kan je via “anaconda navigator” het programma “Spyder” openen, dit is de python IDE die gebruikt is. Om de grafieken interactief te maken met een hogere resolutie op een apart tabblad kan je eenmalig de volgende instructies volgen (let op: dit is nodig voor meerdere lijnen in 1 grafiek): 
 
