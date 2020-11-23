@@ -1,4 +1,4 @@
-Arduino code:
+**ARDUINO CODE**
 
 De code voor de Arduino komt pas rond hoofdstuk 2 en 3.
 
@@ -37,9 +37,12 @@ Let op: Spyder zal ALLEEN meerdere lijnen vertonen als het is ingesteld om in ee
 
 
 
-Arduino code:
 
-Bij de arduino code is het mogelijk om de code te kopiëren en te plakken in Arduino IDE software, en die vervolgens te uploaden in de robot. Verder moeten de libraries "Accelstepper" en "wire.h" geinstalleerd worden om de codes werkend te krijgen.
+
+
+**ARDUINO CODE**
+
+Bij de arduino code is het mogelijk om de code te kopiëren en te plakken in de Arduino IDE software, en die vervolgens te uploaden in de robot. Verder moeten de libraries "Accelstepper" en "wire.h" geinstalleerd worden om de codes werkend te krijgen.
 
 
 
