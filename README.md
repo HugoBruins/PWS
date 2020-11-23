@@ -14,7 +14,7 @@ Wanneer dit is geïnstalleerd kan je via “anaconda navigator” het programma 
 
 Bovenaan in de navigatiebalk bij Spyder heb je het knopje Tools, klik hier op en ga naar
 
-“preferences” -> “IPython console” -> “graphics” -> “Graphics backend”
+* “preferences” -> “IPython console” -> “graphics” -> “Graphics backend”
 
 Verander hier “Inline” naar “Automatic” en druk op “apply”.
 
@@ -34,7 +34,7 @@ Let op: Spyder zal ALLEEN meerdere lijnen vertonen als het is ingesteld om in ee
 
 **ARDUINO CODE**
 
-Bij de arduino code is het mogelijk om de code te kopiëren en te plakken in de Arduino IDE software, en die vervolgens te uploaden in de robot. Verder moeten de libraries "Accelstepper" en "wire.h" geinstalleerd worden om de codes werkend te krijgen.
+Bij de arduino code is het mogelijk om de code te kopiëren en te plakken in de Arduino IDE software, en die vervolgens te uploaden in de robot. Verder moet de librarie "Accelstepper" geinstalleerd worden om de codes werkend te krijgen.
 
 
 
