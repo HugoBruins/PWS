@@ -46,7 +46,7 @@ void setup() {
 
 void loop() { 
   Vector normAccel = mpu.readNormalizeAccel();
-  // Calculate Pitch & Roll
+  //bereken hoek
   float hoek = -(atan2(normAccel.XAxis, sqrt(normAccel.YAxis*normAccel.YAxis + normAccel.ZAxis*normAccel.ZAxis))*180.0)/M_PI;
   
   //voor de P
