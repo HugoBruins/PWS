@@ -37,7 +37,6 @@ void setup() {
   //mpu6050
   Serial.begin(115200);
   while(!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G)) {
-    Serial.println("Mpu werkt niet :(");
     delay(500);
   }
   loop_timer = micros();
