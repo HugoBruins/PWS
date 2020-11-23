@@ -71,15 +71,6 @@ void loop() {
     PID += I;
   }
   
-  //zorgt ervoor dat de PID output nooit groter wordt dan de maximale RPM die we hebben ingesteld
-  if (PID > maxSnelheid) {
-    PID = maxSnelheid;
-  }
-  
-  if (PID < -1 * maxSnelheid) {
-    PID = -1 * maxSnelheid;
-  }
-  
   float PID2 = PID * -1;
   stepper.setSpeed(PID2);
   stepper.runSpeed();     
