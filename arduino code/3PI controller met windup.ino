@@ -10,11 +10,8 @@
 AccelStepper stepper = AccelStepper(motorInterfaceType, stepPin, dirPin);
 AccelStepper stepper2 = AccelStepper(motorInterfaceType, stepPin2, dirPin2);
 
-long loop_timer;
 int maxSnelheid = 1000;
 int snelheid;
-int tijdstap = 1;
-unsigned long vorigetijd;
 
 //voor de MPU 6050
 
@@ -32,6 +29,11 @@ int angle_pitch_buffer, angle_roll_buffer;
 float angle_pitch_output, angle_roll_output;
 
 int temp;
+
+//voor de timer
+long loop_timer;
+int tijdstap = 1;
+unsigned long vorigetijd;
 
 //voor de PID controller
 float setpoint = 0;
