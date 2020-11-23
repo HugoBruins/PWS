@@ -1,8 +1,7 @@
-//voor de stappenmotor
-
 #include <AccelStepper.h>
 #include <Wire.h>
 
+//stappenmotor
 #define dirPin 3
 #define stepPin 2
 #define dirPin2 5
