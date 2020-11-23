@@ -14,5 +14,4 @@ void loop()
 
   int pitch = -(atan2(normAccel.XAxis, sqrt(normAccel.YAxis*normAccel.YAxis + 
                                             normAccel.ZAxis*normAccel.ZAxis))*180.0)/M_PI;
-  int roll = (atan2(normAccel.YAxis, normAccel.ZAxis)*180.0)/M_PI;
 }
