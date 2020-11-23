@@ -102,6 +102,6 @@ void loop() {
 
   //timertje hieronder zodat alle code elke tijdstap wordt uitgevoerd.
   
-  while(micros() - loop_timer < tijdstap*1000);                                 //Wait until the loop_timer reaches 4000us (250Hz) before starting the next loop
+  while(micros() - loop_timer < tijdstap*1000);                               
   loop_timer = micros();//Reset the loop timer
 }
