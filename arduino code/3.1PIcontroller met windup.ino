@@ -71,15 +71,6 @@ void loop() {
   if (I != Imax || I != (-1*Imax)) {
     PID += I;
   }
-
-  
-  //voor het uitprinten van de hoek
-  Serial.print(" | Angle  = "); 
-  Serial.println(hoek);
-  Serial.print("PID output = ");
-  Serial.println(PID);
-  Serial.print("I output = "); 
-  Serial.println(I);
   
   //zorgt ervoor dat de PID output nooit groter wordt dan de maximale RPM die we hebben ingesteld
   if (PID > maxSnelheid) {
@@ -91,10 +82,6 @@ void loop() {
   }
   
   float PID2 = PID * -1;
-  
-  Serial.print("PID output erna: ");
-  Serial.println(PID);
-  
   stepper.setSpeed(PID2);
   stepper.runSpeed();     
   stepper2.setSpeed(PID);
