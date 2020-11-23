@@ -40,7 +40,6 @@ float setpoint = 0;
 float Kp = 12.5 / tijdstap;
 float Ki = 0.25 / tijdstap;
 float Imax = 1000;
-
 float I = 0;
 
 void setup() {
