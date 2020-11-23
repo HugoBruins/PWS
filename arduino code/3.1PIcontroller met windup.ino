@@ -19,7 +19,7 @@ MPU6050 mpu;
 
 //voor de timer
 long loop_timer;
-int tijdstap = 1;
+float tijdstap = 0.5;
 unsigned long vorigetijd;
 
 //voor de PID controller
@@ -102,6 +102,6 @@ void loop() {
 
   //timertje hieronder zodat alle code elke tijdstap wordt uitgevoerd.
   
-  while(micros() - loop_timer < 4000);                                 //Wait until the loop_timer reaches 4000us (250Hz) before starting the next loop
+  while(micros() - loop_timer < tijdstap*1000);                                 //Wait until the loop_timer reaches 4000us (250Hz) before starting the next loop
   loop_timer = micros();//Reset the loop timer
 }
