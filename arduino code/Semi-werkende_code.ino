@@ -83,10 +83,11 @@ float beschikbarePulsen;
 //voor de PID controller
 float setpoint = 0;
 float PID;
-float Kp = 50;
+float PID2;
+float Kp = 40;
 float Ki = 0;
 float Kd = 0;
-int maxWaarde = 400;
+int maxWaarde = 200;
 float vorigeError;
 float I;
 
@@ -152,7 +153,7 @@ void loop() {
   //57.296 = 1 / (3.142 / 180) The Arduino asin function is in radians
   angle_pitch_acc = asin((float)acc_y / acc_total_vector) * 57.296;    //Calculate the pitch angle
   angle_roll_acc = asin((float)acc_x / acc_total_vector) * -57.296;    //Calculate the roll angle
-
+  
   //Place the MPU-6050 spirit level and note the values in the following two lines for calibration
   angle_pitch_acc -= 0.43;                                              //Accelerometer calibration value for pitch
   angle_roll_acc -= 3.38;                                               //Accelerometer calibration value for roll
@@ -194,14 +195,14 @@ void loop() {
   float D = Kd * (error - vorigeError);
   vorigeError = error;
 
-  float PID = P + I + D; //de snelheid van de motor, in stappen per seconde
-  
-  //PID = abs(round(PID));
+  PID = P + I + D; //de snelheid van de motor, in stappen per seconde
+  PID2 = PID*-1;
+
   Serial.println(PID);
 
-  stepper.setSpeed(PID);
+  stepper.setSpeed(-PID);
   stepper.runSpeed();
-  stepper2.setSpeed(-PID);
+  stepper2.setSpeed(PID);
   stepper2.runSpeed();
 
   while (loop_timer > micros());
