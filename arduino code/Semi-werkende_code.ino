@@ -199,9 +199,6 @@ void loop() {
   //PID = abs(round(PID));
   Serial.println(PID);
 
-  if (PID > maxWaarde)PID = maxWaarde;
-  else if (PID < maxWaarde * -1)PID = maxWaarde * -1;
-
   stepper.setSpeed(PID);
   stepper.runSpeed();
   stepper2.setSpeed(-PID);
