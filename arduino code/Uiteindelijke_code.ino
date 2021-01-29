@@ -55,18 +55,22 @@ bool start = true;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 float setpoint = 0;
+float Kp = 150;
+float Ki = 0;
+float Kd = 50;
+float I;
+
+float PIDtemp;
 float PID;
 float PID2;
-float Kp = 200;
-float Ki = 4;
-float Kd = 20;
-int maxWaarde = 750;
+
+int maxWaarde = 500;
 float vorigeError;
-float I;
+float stabilisatieWaarde;
 
 void setup() {
   Wire.begin();                                                         //Begin de de I2C voor de MPU6050
-  //Serial.begin(57600);                                                //Seriële verbinding voor debuggen
+  Serial.begin(57600);                                                //Seriële verbinding voor debuggen
   pinMode(LED_BUILTIN, OUTPUT);                                         
   digitalWrite(LED_BUILTIN, HIGH);                                      //Zet het ingebouwde ledje op de Arduino aan om te laten zien dat de kallibratie van de MPU6050 bezig is
 
@@ -81,6 +85,7 @@ void setup() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   for (int cal_int = 0; cal_int < 500 ; cal_int ++) {                  //Code wordt vijfhonderd keer herhaald
+    Serial.println(cal_int);
     read_mpu_6050_data();                                              //Lees de data af van de MPU
     gyro_x_cal += gyro_x;                                              //Lees de gyrodata af van de sensor en tel dit bij de variabele op
     gyro_y_cal += gyro_y;                                              //Lees de gyrodata af van de sensor en tel dit bij de variabele op
@@ -147,8 +152,8 @@ void loop() {
   angle_roll_acc = asin((float)acc_x / acc_total_vector) * -57.296;    //Calculate the roll angle
 
   //Place the MPU-6050 spirit level and note the values in the following two lines for calibration
-  angle_pitch_acc -= 1.85;                                              //Accelerometer calibration value for pitch
-  angle_roll_acc -= 2.76;                                               //Accelerometer calibration value for roll
+  angle_pitch_acc -= 0.9;                                              //Accelerometer calibration value for pitch
+  angle_roll_acc -= 3.09;                                               //Accelerometer calibration value for roll
 
   if (set_gyro_angles) {                                               //If the IMU is already started
     angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Correct the drift of the gyro pitch angle with the accelerometer pitch angle
@@ -164,8 +169,8 @@ void loop() {
   angle_pitch_output = angle_pitch_output * 0.9 + angle_pitch * 0.1;   //Take 90% of the output pitch value and add 10% of the raw pitch value
   angle_roll_output = angle_roll_output * 0.9 + angle_roll * 0.1;      //Take 90% of the output roll value and add 10% of the raw roll value
 
-  Serial.println(angle_roll_output);
   Serial.println(angle_pitch_output);
+  Serial.println(angle_roll_output);  
 
   float hoek = angle_roll_output;
 
@@ -190,19 +195,24 @@ void loop() {
   //float D = Kd * (vorigeError - hoek);
   //vorigeError = hoek;
 
-  PID = P + I + D; //de snelheid van de motor, in stappen per seconde
+  PIDtemp = P + I + D; //de snelheid van de motor, in stappen per seconde
+
+  if (PIDtemp < 0)stabilisatieWaarde += 3;
+  if (PIDtemp > 0)stabilisatieWaarde -= 3;
   
+  PID = PIDtemp - stabilisatieWaarde;    
   PID2 = PID * -1;
 
   //Serial.println(PID);
 
-  /*if (!start && hoek < 3 && hoek > -3) {
+  if (hoek < 3 && hoek > -3) {
     start = true;
   }
 
-  if (hoek > 20 || hoek < -20){
+  if (hoek > 28 || hoek < -28){
     start = false;
-  }*/
+    stabilisatieWaarde = 0;
+  }
   
   if (start) {
     stepper.setSpeed(PID);
