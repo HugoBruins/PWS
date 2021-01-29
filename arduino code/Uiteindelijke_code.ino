@@ -181,7 +181,8 @@ void loop() {
   if (hoek > 0)stabilisatieWaarde -= 0.0015;
 
   //P-controller
-  float error = setpoint - (hoek + stabilisatieWaarde);
+  setpoint -= stabilisatieWaarde;
+  float error = setpoint - hoek;
   float P = error * Kp;
 
   //I-controller
