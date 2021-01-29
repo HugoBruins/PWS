@@ -55,16 +55,17 @@ bool start = true;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 float setpoint = 0;
-float Kp = 150;
-float Ki = 1;
-float Kd = 50;
+float setpointTemp;
+float Kp = 150;//150
+float Ki = 1.5;//1
+float Kd = 230;//50
 float I;
 
 float PIDtemp;
 float PID;
 float PID2;
 
-int maxWaarde = 500;
+int maxWaarde = 1000;
 float vorigeError;
 float stabilisatieWaarde;
 
@@ -84,7 +85,7 @@ void setup() {
 //Bij het starten hoort de robot stil gehouden te worden totdat het ledje uitgeschakeld wordt.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  for (int cal_int = 0; cal_int < 500 ; cal_int ++) {                  //Code wordt vijfhonderd keer herhaald
+  for (int cal_int = 0; cal_int < 1000 ; cal_int ++) {                  //Code wordt vijfhonderd keer herhaald
     Serial.println(cal_int);
     read_mpu_6050_data();                                              //Lees de data af van de MPU
     gyro_x_cal += gyro_x;                                              //Lees de gyrodata af van de sensor en tel dit bij de variabele op
@@ -92,9 +93,9 @@ void setup() {
     gyro_z_cal += gyro_z;                                              //Lees de gyrodata af van de sensor en tel dit bij de variabele op
     delayMicroseconds(3700);                                           //Delay van 3 ms tussen de aflezingen van de sensor
   }
-  gyro_x_cal /= 500;                                                  //Deel door 500 om de gemiddelde afwijking van de gyrosensor te bepalen
-  gyro_y_cal /= 500;                                                  //Deel door 500 om de gemiddelde afwijking van de gyrosensor te bepalen
-  gyro_z_cal /= 500;                                                  //Deel door 500 om de gemiddelde afwijking van de gyrosensor te bepalen
+  gyro_x_cal /= 1000;                                                  //Deel door 500 om de gemiddelde afwijking van de gyrosensor te bepalen
+  gyro_y_cal /= 1000;                                                  //Deel door 500 om de gemiddelde afwijking van de gyrosensor te bepalen
+  gyro_z_cal /= 1000;                                                  //Deel door 500 om de gemiddelde afwijking van de gyrosensor te bepalen
 
   digitalWrite(LED_BUILTIN, LOW);                                           
 
@@ -177,8 +178,6 @@ void loop() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PID-berekeningen
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  if (hoek < 0)stabilisatieWaarde += 0.0015;
-  if (hoek > 0)stabilisatieWaarde -= 0.0015;
 
   //P-controller
   setpoint -= stabilisatieWaarde;
@@ -193,14 +192,16 @@ void loop() {
   if (I < maxWaarde * -1) I = maxWaarde * -1;
 
   // D-controller
-  float D = Kd * (error - vorigeError);
-  vorigeError = error;
-  //float D = Kd * (vorigeError - hoek);
-  //vorigeError = hoek;
+  //float D = Kd * (error - vorigeError);
+  //vorigeError = error;
+  float D = -Kd * (vorigeError - hoek);
+  vorigeError = hoek;
 
   PID = P + I + D; //de snelheid van de motor, in stappen per seconde
-  
-  PID = PID - stabilisatieWaarde;    
+
+  if (PID < 0)setpoint -= 0.0015;
+  if (PID > 0)setpoint += 0.0015;
+      
   PID2 = PID * -1;
 
   //Serial.println(PID);
