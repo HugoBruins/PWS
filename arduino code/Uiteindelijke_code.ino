@@ -199,7 +199,7 @@ void loop() {
   float D = -Kd * (vorigeError - hoek);
   vorigeError = hoek;
   
-  if(PID < 5 || PID > -5)PID = 0; //voorkomt kleine osscilaties als hij eenmaal gebalanceerd is
+  if(PID < 5 && PID > -5)PID = 0; //voorkomt kleine osscilaties als hij eenmaal gebalanceerd is
   
   PID = P + I + D; //de snelheid van de motor, in stappen per seconde
 
