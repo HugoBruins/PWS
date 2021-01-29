@@ -56,7 +56,7 @@ bool start = true;
 
 float setpoint = 0;
 float Kp = 150;
-float Ki = 0;
+float Ki = 1;
 float Kd = 50;
 float I;
 
@@ -152,8 +152,8 @@ void loop() {
   angle_roll_acc = asin((float)acc_x / acc_total_vector) * -57.296;    //Calculate the roll angle
 
   //Place the MPU-6050 spirit level and note the values in the following two lines for calibration
-  angle_pitch_acc -= 0.9;                                              //Accelerometer calibration value for pitch
-  angle_roll_acc -= 3.09;                                               //Accelerometer calibration value for roll
+  angle_pitch_acc -= 1.20;                                              //Accelerometer calibration value for pitch
+  angle_roll_acc -= 2.19;                                               //Accelerometer calibration value for roll
 
   if (set_gyro_angles) {                                               //If the IMU is already started
     angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Correct the drift of the gyro pitch angle with the accelerometer pitch angle
@@ -177,9 +177,11 @@ void loop() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PID-berekeningen
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  if (hoek < 0)stabilisatieWaarde += 0.0015;
+  if (hoek > 0)stabilisatieWaarde -= 0.0015;
 
   //P-controller
-  float error = setpoint - hoek;
+  float error = setpoint - (hoek + stabilisatieWaarde);
   float P = error * Kp;
 
   //I-controller
@@ -195,12 +197,9 @@ void loop() {
   //float D = Kd * (vorigeError - hoek);
   //vorigeError = hoek;
 
-  PIDtemp = P + I + D; //de snelheid van de motor, in stappen per seconde
-
-  if (PIDtemp < 0)stabilisatieWaarde += 3;
-  if (PIDtemp > 0)stabilisatieWaarde -= 3;
+  PID = P + I + D; //de snelheid van de motor, in stappen per seconde
   
-  PID = PIDtemp - stabilisatieWaarde;    
+  PID = PID - stabilisatieWaarde;    
   PID2 = PID * -1;
 
   //Serial.println(PID);
