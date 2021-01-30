@@ -24,7 +24,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int gyro_x, gyro_y, gyro_z;
 long acc_x, acc_y, acc_z, acc_total_vector;
-int temperature;
 long gyro_x_cal, gyro_y_cal, gyro_z_cal;
 long loop_timer;
 float angle_pitch, angle_roll;
@@ -46,8 +45,7 @@ float tijdstap = 4000;
 AccelStepper stepper = AccelStepper(motorInterfaceType, stepPin, dirPin);
 AccelStepper stepper2 = AccelStepper(motorInterfaceType, stepPin2, dirPin2);
 
-int maxSnelheid = 2000;
-int snelheid;
+int maxSnelheid = 4000;
 bool start = true;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,19 +53,17 @@ bool start = true;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 float setpoint = 0;
-float setpointTemp;
-float Kp = 150;//150
-float Ki = 1.5;//1
-float Kd = 230;//50
+float Kp = 140;//150
+float Ki = 1.25;//1.5
+float Kd = 230;//230
 float I;
 
-float PIDtemp;
 float PID;
 float PID2;
 
-int maxWaarde = 1000;
+int Imax = 1000;
 float vorigeError;
-float stabilisatieWaarde;
+float vorigeHoek;
 
 void setup() {
   Wire.begin();                                                         //Begin de de I2C voor de MPU6050
@@ -178,33 +174,31 @@ void loop() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PID-berekeningen
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  if(PID > 10 || PID < -10)error += PID * 0.015; //zorgt dat de robot zich in de andere richting draait bij een duwtje
   
-  
-  //P-controller
   setpoint -= stabilisatieWaarde;
   float error = setpoint - hoek;
+  
+  if(PID > 150 || PID < -150)error += PID * 0.0007; //zorgt dat de robot zich in de andere richting draait bij een duw
+  
+  //P-controller
   float P = error * Kp;
 
-  //I-controller
   I += Ki * error;
 
   //windup bescherming
-  if (I > maxWaarde) I = maxWaarde;
-  if (I < maxWaarde * -1) I = maxWaarde * -1;
+  if (I > Imax) I = Imax;
+  if (I < Imax * -1) I = Imax * -1;
 
   // D-controller
   //float D = Kd * (error - vorigeError);
   //vorigeError = error;
-  float D = -Kd * (vorigeError - hoek);
-  vorigeError = hoek;
-  
-  if(PID < 5 && PID > -5)PID = 0; //voorkomt kleine osscilaties als hij eenmaal gebalanceerd is
-  
+  float D = -Kd * (vorigeHoek - hoek);
+  vorigeHoek = hoek;
+
   PID = P + I + D; //de snelheid van de motor, in stappen per seconde
 
-  if (PID < 0)setpoint -= 0.0015;
-  if (PID > 0)setpoint += 0.0015;
+  if (PID < 0)setpoint -= 0.0013;
+  if (PID > 0)setpoint += 0.0013;
       
   PID2 = PID * -1;
 
@@ -216,7 +210,7 @@ void loop() {
 
   if (hoek > 28 || hoek < -28){
     start = false;
-    stabilisatieWaarde = 0;
+    setpoint = 0;
   }
   
   if (start) {
