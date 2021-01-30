@@ -66,22 +66,22 @@ float vorigeError;
 float vorigeHoek;
 
 void setup() {
-  Wire.begin();                                                         //Begin de de I2C voor de MPU6050
-  Serial.begin(57600);                                                //Seriële verbinding voor debuggen
+  Wire.begin();                                                        //Begin de de I2C voor de MPU6050
+  Serial.begin(57600);                                                 //Seriële verbinding voor debuggen
   pinMode(LED_BUILTIN, OUTPUT);                                         
-  digitalWrite(LED_BUILTIN, HIGH);                                      //Zet het ingebouwde ledje op de Arduino aan om te laten zien dat de kallibratie van de MPU6050 bezig is
+  digitalWrite(LED_BUILTIN, HIGH);                                     //Zet het ingebouwde ledje op de Arduino aan om te laten zien dat de kallibratie van de MPU6050 bezig is
 
-  stepper.setMaxSpeed(maxSnelheid);                                     //Stelt de maximale snelheid van de motoren in
+  stepper.setMaxSpeed(maxSnelheid);                                    //Stelt de maximale snelheid van de motoren in
   stepper2.setMaxSpeed(maxSnelheid);
-
-  setup_mpu_6050_registers();                                           //Stelt de MPU6050 in op een gegeven bereik.
   
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Kallibratie van de MPU6050
 //Bij het starten hoort de robot stil gehouden te worden totdat het ledje uitgeschakeld wordt.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  for (int cal_int = 0; cal_int < 1000 ; cal_int ++) {                  //Code wordt vijfhonderd keer herhaald
+  setup_mpu_6050_registers();                                          //Stelt de MPU6050 in op een gegeven bereik.
+  
+  for (int cal_int = 0; cal_int < 1000 ; cal_int ++) {                 //Code wordt vijfhonderd keer herhaald
     Serial.println(cal_int);
     read_mpu_6050_data();                                              //Lees de data af van de MPU
     gyro_x_cal += gyro_x;                                              //Lees de gyrodata af van de sensor en tel dit bij de variabele op
