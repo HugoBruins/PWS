@@ -81,7 +81,7 @@ void setup() {
 
   setup_mpu_6050_registers();                                          //Stelt de MPU6050 in op een gegeven bereik.
   
-  for (int cal_int = 0; cal_int < 1000 ; cal_int ++) {                 //Code wordt vijfhonderd keer herhaald
+  for (int cal_int = 0; cal_int < 1000 ; cal_int ++) {                 //Code wordt duizend keer herhaald
     Serial.println(cal_int);
     read_mpu_6050_data();                                              //Lees de data af van de MPU
     gyro_x_cal += gyro_x;                                              //Lees de gyrodata af van de sensor en tel dit bij de variabele op
