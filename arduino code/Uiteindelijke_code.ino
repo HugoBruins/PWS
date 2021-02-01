@@ -87,11 +87,11 @@ void setup() {
     gyro_x_cal += gyro_x;                                              //Lees de gyrodata af van de sensor en tel dit bij de variabele op
     gyro_y_cal += gyro_y;                                              //Lees de gyrodata af van de sensor en tel dit bij de variabele op
     gyro_z_cal += gyro_z;                                              //Lees de gyrodata af van de sensor en tel dit bij de variabele op
-    delayMicroseconds(3700);                                           //Delay van 3 ms tussen de aflezingen van de sensor
+    delayMicroseconds(3700);                                           //Delay van 3,7 ms tussen de aflezingen van de sensor
   }
-  gyro_x_cal /= 1000;                                                  //Deel door 500 om de gemiddelde afwijking van de gyrosensor te bepalen
-  gyro_y_cal /= 1000;                                                  //Deel door 500 om de gemiddelde afwijking van de gyrosensor te bepalen
-  gyro_z_cal /= 1000;                                                  //Deel door 500 om de gemiddelde afwijking van de gyrosensor te bepalen
+  gyro_x_cal /= 1000;                                                  //Deel door 1000 om de gemiddelde afwijking van de gyrosensor te bepalen
+  gyro_y_cal /= 1000;                                                  //Deel door 1000 om de gemiddelde afwijking van de gyrosensor te bepalen
+  gyro_z_cal /= 1000;                                                  //Deel door 1000 om de gemiddelde afwijking van de gyrosensor te bepalen
 
   digitalWrite(LED_BUILTIN, LOW);                                           
 
