@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Code voor Balanceerrobot (aka BalanceerMeneer) 
+//Code voor Balanceerrobot
 //Door Hugo Bruins en Thomas Ritmeester
 
 //De gebruikte code voor de MPU6050 is gemaakt door Joop Brokking (http://www.brokking.net/imu.html).
@@ -127,44 +127,44 @@ void loop() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Het uitlezen van de data van de MPU6050 en berekeningen tot een hoek
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  read_mpu_6050_data();                                                //Read the raw acc and gyro data from the MPU-6050
+  read_mpu_6050_data();                                                //Lees de onverwerkte gyro- en versnellingsdata af van de MPU6050
 
-  gyro_x -= gyro_x_cal;                                                //Subtract the offset calibration value from the raw gyro_x value
-  gyro_y -= gyro_y_cal;                                                //Subtract the offset calibration value from the raw gyro_y value
-  gyro_z -= gyro_z_cal;                                                //Subtract the offset calibration value from the raw gyro_z value
+  gyro_x -= gyro_x_cal;                                                //Trek de eerder berekende kalibratiewaarde af van de waarde van de gyrosensor
+  gyro_y -= gyro_y_cal;                                                //Trek de eerder berekende kalibratiewaarde af van de waarde van de gyrosensor
+  gyro_z -= gyro_z_cal;                                                //Trek de eerder berekende kalibratiewaarde af van de waarde van de gyrosensor
 
-  //Gyro angle calculations
-  //0.0000611 = 1 / (250Hz / 65.5)
-  angle_pitch += gyro_x * 0.0000611;                                   //Calculate the traveled pitch angle and add this to the angle_pitch variable
-  angle_roll += gyro_y * 0.0000611;                                    //Calculate the traveled roll angle and add this to the angle_roll variable
+  //Gyrosensor hoekberekening
+  //0.0000611 = 1 / 250Hz / 65.5
+  angle_pitch += gyro_x * 0.0000611;                                   //Bereken de gedraaide afstand en tel deze op bij de angle_pitch variabele
+  angle_roll += gyro_y * 0.0000611;                                    //Bereken de gedraaide afstand en tel deze op bij de angle_pitch variabele
 
-  //0.000001066 = 0.0000611 * (3.142(PI) / 180degr) The Arduino sin function is in radians
-  angle_pitch += angle_roll * sin(gyro_z * 0.000001066);               //If the IMU has yawed transfer the roll angle to the pitch angel
-  angle_roll -= angle_pitch * sin(gyro_z * 0.000001066);               //If the IMU has yawed transfer the pitch angle to the roll angel
+  //0.000001066 = 0.0000611 * (3.142(PI) / 180degr)
+  angle_pitch += angle_roll * sin(gyro_z * 0.000001066);               //Als de sensor een pitchhoek heeft gekregen, stel dan de rollvariabele bij
+  angle_roll -= angle_pitch * sin(gyro_z * 0.000001066);               //Als de sensor een rollhoek heeft gekregen, stel dan de pithchvariabele bij
 
-  //Accelerometer angle calculations
-  acc_total_vector = sqrt((acc_x * acc_x) + (acc_y * acc_y) + (acc_z * acc_z)); //Calculate the total accelerometer vector
-  //57.296 = 1 / (3.142 / 180) The Arduino asin function is in radians
-  angle_pitch_acc = asin((float)acc_y / acc_total_vector) * 57.296;    //Calculate the pitch angle
-  angle_roll_acc = asin((float)acc_x / acc_total_vector) * -57.296;    //Calculate the roll angle
+  //Accelerometerhoekberekening
+  acc_total_vector = sqrt((acc_x * acc_x) + (acc_y * acc_y) + (acc_z * acc_z)); //berkenen de totale vector van de accelerometer
+  //57.296 = 1 / (3.142 / 180)
+  angle_pitch_acc = asin((float)acc_y / acc_total_vector) * 57.296;    //Bereken de pitchhoek
+  angle_roll_acc = asin((float)acc_x / acc_total_vector) * -57.296;    //Bereken de rollhoek
 
-  //Place the MPU-6050 spirit level and note the values in the following two lines for calibration
-  angle_pitch_acc -= 1.20;                                              //Accelerometer calibration value for pitch
-  angle_roll_acc -= 2.19;                                               //Accelerometer calibration value for roll
+  //Kalibratiewaarden voor wanneer de sensor niet volledig recht geplaatst is.
+  angle_pitch_acc -= 1.20;                                              //Accelerometerkalibratiewaarde voor pitch
+  angle_roll_acc -= 2.19;                                               //Accelerometerkalibratiewaarde voor roll
 
-  if (set_gyro_angles) {                                               //If the IMU is already started
-    angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Correct the drift of the gyro pitch angle with the accelerometer pitch angle
-    angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
+  if (set_gyro_angles) {                                               //Als de gyrosensor gestart is...
+    angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Neem dan de gevonden kalibratiewaarden mee in de berekening
+    angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Neem dan de gevonden offset mee in de berekening
   }
-  else {                                                               //At first start
-    angle_pitch = angle_pitch_acc;                                     //Set the gyro pitch angle equal to the accelerometer pitch angle
-    angle_roll = angle_roll_acc;                                       //Set the gyro roll angle equal to the accelerometer roll angle
-    set_gyro_angles = true;                                            //Set the IMU started flag
+  else {                                                               //De eerste meting
+    angle_pitch = angle_pitch_acc;                                     //Stel de pitchhoek van de gyrosensor gelijk aan die van de accelerometer
+    angle_roll = angle_roll_acc;                                       //Stel de rollhoek van de gyrosensor gelijk aan die van de accelerometer
+    set_gyro_angles = true;                                            //Laat weten dat de sensor begonnen is.
   }
 
-  //To dampen the pitch and roll angles a complementary filter is used
-  angle_pitch_output = angle_pitch_output * 0.9 + angle_pitch * 0.1;   //Take 90% of the output pitch value and add 10% of the raw pitch value
-  angle_roll_output = angle_roll_output * 0.9 + angle_roll * 0.1;      //Take 90% of the output roll value and add 10% of the raw roll value
+  //Complementaire filter om schokkerige beweging te voorkomen
+  angle_pitch_output = angle_pitch_output * 0.9 + angle_pitch * 0.1;   //Neemt 90% van de vorige waarde en telt er 10% van de gevonden waarde bij op
+  angle_roll_output = angle_roll_output * 0.9 + angle_roll * 0.1;      //Neemt 90% van de vorige waarde en telt er 10% van de gevonden waarde bij op
 
   Serial.println(angle_pitch_output);
   Serial.println(angle_roll_output);  
