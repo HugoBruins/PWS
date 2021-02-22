@@ -100,19 +100,17 @@ void setup() {
 //veranderende snelheid.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  cli(); // stop interrupts
-  TCCR2A = 0;// set entire TCCR2A register to 0
-  TCCR2B = 0;// same for TCCR2B
-  TCNT2  = 0;//initialize counter value to 0
-  // set compare match register for 8khz increments
-  OCR2A = 249;// = (16*10^6) / (8000*8) - 1 (must be <256)
-  // turn on CTC mode
+  cli(); // stop de interrupts
+  TCCR2A = 0;// zet hele TCCR2A register naar 0
+  TCCR2B = 0;// zelfde voor TCCR2B
+  TCNT2  = 0;//zet teller naar 0
+  // set vergelijking register voor 8khz tussenstappen
+  OCR2A = 249;// = (16*10^6) / (8000*8) - 1
+  // zet CTC mode aan
   TCCR2A |= (1 << WGM21);
-  // Set CS21 bit for 8 prescaler
   TCCR2B |= (1 << CS21);
-  // enable timer compare interrupt
   TIMSK2 |= (1 << OCIE2A);
-  sei();//allow interrupts
+  sei(); //sta interrupts toe
 
   // De timervariabele wordt gelijkgesteld aan de huidige tijd op de timer van de Arduino plus 4000 microseconde. Dit zorgt ervoor dat de tijd dat de volgende loop moet beginnen bijgehouden wordt.
   loop_timer = micros() + 4000; 
@@ -229,36 +227,36 @@ void loop() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Enkele functies voor het uitlezen van de MPU6050
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void read_mpu_6050_data() {                                            //Subroutine for reading the raw gyro and accelerometer data
-  Wire.beginTransmission(0x68);                                        //Start communicating with the MPU-6050
-  Wire.write(0x3B);                                                    //Send the requested starting register
-  Wire.endTransmission();                                              //End the transmission
-  Wire.requestFrom(0x68, 14);                                          //Request 14 bytes from the MPU-6050
-  while (Wire.available() < 14);                                       //Wait until all the bytes are received
-  acc_x = Wire.read() << 8 | Wire.read();                              //Add the low and high byte to the acc_x variable
-  acc_y = Wire.read() << 8 | Wire.read();                              //Add the low and high byte to the acc_y variable
-  acc_z = Wire.read() << 8 | Wire.read();                              //Add the low and high byte to the acc_z variable
-  temperature = Wire.read() << 8 | Wire.read();                        //Add the low and high byte to the temperature variable
-  gyro_x = Wire.read() << 8 | Wire.read();                             //Add the low and high byte to the gyro_x variable
-  gyro_y = Wire.read() << 8 | Wire.read();                             //Add the low and high byte to the gyro_y variable
-  gyro_z = Wire.read() << 8 | Wire.read();                             //Add the low and high byte to the gyro_z variable
+void read_mpu_6050_data() {                                           
+  Wire.beginTransmission(0x68);                                        //Start het communiceren met de MPU-6050
+  Wire.write(0x3B);                                                    //stuur het gevraagde register
+  Wire.endTransmission();                                              //eindig de versturing
+  Wire.requestFrom(0x68, 14);                                          //vraag 14 bytes van de MPU-6050
+  while (Wire.available() < 14);                                       //wacht totdat alle bytes binnen zijn
+  acc_x = Wire.read() << 8 | Wire.read();                              //voeg de hoge en lage byte toe aan de acc_x variable
+  acc_y = Wire.read() << 8 | Wire.read();                              //voeg de hoge en lage byte toe aan de acc_y variable
+  acc_z = Wire.read() << 8 | Wire.read();                              //voeg de hoge en lage byte toe aan de variable
+  temperature = Wire.read() << 8 | Wire.read();                        //voeg de hoge en lage byte toe aan de temperatuur variable
+  gyro_x = Wire.read() << 8 | Wire.read();                             //voeg de hoge en lage byte toe aan de gyro_x variable
+  gyro_y = Wire.read() << 8 | Wire.read();                             //voeg de hoge en lage byte toe aan de gyro_y variable
+  gyro_z = Wire.read() << 8 | Wire.read();                             //voeg de hoge en lage byte toe aan de gyro_z variable
 
 }
 
 void setup_mpu_6050_registers() {
-  //Activate the MPU-6050
-  Wire.beginTransmission(0x68);                                        //Start communicating with the MPU-6050
-  Wire.write(0x6B);                                                    //Send the requested starting register
-  Wire.write(0x00);                                                    //Set the requested starting register
-  Wire.endTransmission();                                              //End the transmission
-  //Configure the accelerometer (+/-8g)
-  Wire.beginTransmission(0x68);                                        //Start communicating with the MPU-6050
-  Wire.write(0x1C);                                                    //Send the requested starting register
-  Wire.write(0x10);                                                    //Set the requested starting register
-  Wire.endTransmission();                                              //End the transmission
-  //Configure the gyro (500dps full scale)
-  Wire.beginTransmission(0x68);                                        //Start communicating with the MPU-6050
-  Wire.write(0x1B);                                                    //Send the requested starting register
-  Wire.write(0x08);                                                    //Set the requested starting register
-  Wire.endTransmission();                                              //End the transmission
+  //Activeer de MPU-6050
+  Wire.beginTransmission(0x68);                                        //Start het communiceren met de MPU-6050
+  Wire.write(0x6B);                                                    //stuur het gevraagde startregister
+  Wire.write(0x00);                                                    //Stel het gevraagde startregister in
+  Wire.endTransmission();                                              //eindig het versturen
+  //configureer de versnellingsmeter
+  Wire.beginTransmission(0x68);                                        //Start het communiceren met de mpu-6050
+  Wire.write(0x1C);                                                    //Stuur de gevraagde startregister
+  Wire.write(0x10);                                                    //Stel het gevraagde startregister in
+  Wire.endTransmission();                                              //Eindig het versturen
+  //configureer de gyro
+  Wire.beginTransmission(0x68);                                        //Start het communiceren met de mpu-6050
+  Wire.write(0x1B);                                                    //Stuur de gevraagde startregister
+  Wire.write(0x08);                                                    //Stel het gevraagde startregister in
+  Wire.endTransmission();                                              //Eindig het versturen
 }
