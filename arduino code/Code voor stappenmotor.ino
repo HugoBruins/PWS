@@ -1,6 +1,4 @@
-#include <MPU6050.h>
 #include <AccelStepper.h>
-#include <Wire.h>
 
 #define dirPin 5
 #define stepPin 4
