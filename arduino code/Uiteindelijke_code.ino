@@ -189,20 +189,17 @@ void loop() {
   if (I < Imax * -1) I = Imax * -1;
 
   // D-controller
-  //float D = Kd * (error - vorigeError);
-  //vorigeError = error;
   float D = -Kd * (vorigeHoek - hoek);
   vorigeHoek = hoek;
 
-  PID = P + I + D; //de snelheid van de motor, in stappen per seconde
+  PID = P + I + D; //de PID-output: de snelheid van de motor, in stappen per seconde
 
-  if (PID < 0)setpoint -= 0.0013;
+  if (PID < 0)setpoint -= 0.0013; //De setpoint wordt dynamisch veranderd, zodat de robot ook op een helling overeind blijft staan
   if (PID > 0)setpoint += 0.0013;
       
-  PID2 = PID * -1;
+  PID2 = PID * -1; //De tweede motor draait in tegengestelde richting en heeft dus een negatieve snelheid
 
-  //Serial.println(PID);
-
+  //Het volgende deel start de robot wanneer de hoek kleiner dan 3 graden is en stopt de robot wanneer de hoek groter is dan 28 graden in beide richtingen.
   if (hoek < 3 && hoek > -3) {
     start = true;
   }
@@ -212,6 +209,7 @@ void loop() {
     setpoint = 0;
   }
   
+  //Dit deel past de berekende snelheid van de motoren aan
   if (start) {
     stepper.setSpeed(PID);
     stepper2.setSpeed(PID2);
@@ -220,6 +218,7 @@ void loop() {
     stepper2.setSpeed(0);
   }
 
+  //timer die ervoor zorgt dat elke cyclus van meten en berekenen exact 4ms duurt.
   while (loop_timer > micros());
   loop_timer += 4000;
 }
@@ -229,9 +228,9 @@ void loop() {
 //Enkele functies voor het uitlezen van de MPU6050
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void read_mpu_6050_data() {                                           
-  Wire.beginTransmission(0x68);                                        //Start het communiceren met de MPU-6050
+  Wire.beginTransmission(0x68);                                        //start het communiceren met de MPU-6050
   Wire.write(0x3B);                                                    //stuur het gevraagde register
-  Wire.endTransmission();                                              //eindig de versturing
+  Wire.endTransmission();                                              //eindig het versturen
   Wire.requestFrom(0x68, 14);                                          //vraag 14 bytes van de MPU-6050
   while (Wire.available() < 14);                                       //wacht totdat alle bytes binnen zijn
   acc_x = Wire.read() << 8 | Wire.read();                              //voeg de hoge en lage byte toe aan de acc_x variable
@@ -246,18 +245,18 @@ void read_mpu_6050_data() {
 
 void setup_mpu_6050_registers() {
   //Activeer de MPU-6050
-  Wire.beginTransmission(0x68);                                        //Start het communiceren met de MPU-6050
+  Wire.beginTransmission(0x68);                                        //start het communiceren met de MPU-6050
   Wire.write(0x6B);                                                    //stuur het gevraagde startregister
-  Wire.write(0x00);                                                    //Stel het gevraagde startregister in
+  Wire.write(0x00);                                                    //etel het gevraagde startregister in
   Wire.endTransmission();                                              //eindig het versturen
   //configureer de versnellingsmeter
-  Wire.beginTransmission(0x68);                                        //Start het communiceren met de mpu-6050
-  Wire.write(0x1C);                                                    //Stuur de gevraagde startregister
-  Wire.write(0x10);                                                    //Stel het gevraagde startregister in
-  Wire.endTransmission();                                              //Eindig het versturen
+  Wire.beginTransmission(0x68);                                        //start het communiceren met de mpu-6050
+  Wire.write(0x1C);                                                    //stuur de gevraagde startregister
+  Wire.write(0x10);                                                    //stel het gevraagde startregister in
+  Wire.endTransmission();                                              //eindig het versturen
   //configureer de gyro
-  Wire.beginTransmission(0x68);                                        //Start het communiceren met de mpu-6050
-  Wire.write(0x1B);                                                    //Stuur de gevraagde startregister
-  Wire.write(0x08);                                                    //Stel het gevraagde startregister in
-  Wire.endTransmission();                                              //Eindig het versturen
+  Wire.beginTransmission(0x68);                                        //start het communiceren met de mpu-6050
+  Wire.write(0x1B);                                                    //stuur de gevraagde startregister
+  Wire.write(0x08);                                                    //stel het gevraagde startregister in
+  Wire.endTransmission();                                              //eindig het versturen
 }
