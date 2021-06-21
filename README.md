@@ -2,7 +2,7 @@
 
 This repository was made for our Dutch school (finals) project, I changed the readme to English so everyone would understand, but all the comments in the code are still made in Dutch, because otherwise it wouldn't match the project anymore.
 
-For our finals project, we made a self-balancing robot where we explored the magic of PID control. Our project actually won first place for a Dutch competition for best computer science final school project (In Dutch this would be called profielwerkstuk). [3i award first place vwo](https://3i-award.nl/prijswinnaars-3i-award-2021/ "3i award first place vwo").
+For our finals project, we made a self-balancing robot where we explored the magic of PID control. Our project actually won first place for a Dutch competition for best computer science final school project (In Dutch this would be called profielwerkstuk). [3i award first place vwo](https://3i-award.nl/prijswinnaars-3i-award-2021/ "3i Award 2021 first place vwo").
 
 ## Arduino Code
 
