@@ -8,7 +8,7 @@ In chapter 1 of our school project we used figures to explain PID, these figures
 
 ## Instructions to recreate the plots
 
-1. Check what figure you want to recreate, search the code with the same name (Say figure 12, load `PID fig12.py`.
+1. Check what figure you want to recreate, search the code with the same name (say figure 12, load `PID fig12.py`.
 2. Run the code.
 3. Change the variable names to the second color of the plot (for figure 12 specifically you will need to uncomment lines `24` & `25` of the code).
 4. Run the code.
